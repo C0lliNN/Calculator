@@ -1,0 +1,34 @@
+
+    /* #main refers BorderPane */
+
+    /* The background the program */
+
+#main{
+    -fx-background-color: #303030;
+}
+
+    /* Numbers buttons */
+
+.button{
+    -fx-text-fill: white;
+    -fx-background-color: #3B3D3B;
+}
+
+    /* Operator buttons */
+
+.operators{
+    -fx-background-color: #333433;
+}
+
+    /* Equal button */
+
+#equal{
+    -fx-background-color: #D43B03;
+}
+
+    /* Text Field Configuration */
+
+.text-field{
+    -fx-text-fill: #F4E003;
+    -fx-background-color: #616161;
+}

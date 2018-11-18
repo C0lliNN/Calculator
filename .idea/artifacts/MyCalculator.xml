@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="MyCalculator">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyCalculator</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="com.raphaelcollin.calculator.Main" />
+        <option name="description" value="A calculator made in Java11" />
+        <option name="height" value="320" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="Calculator" />
+        <option name="vendor" value="Raphael Collin" />
+        <option name="version" value="1.0" />
+        <option name="width" value="430" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="MyCalculator.jar">
+        <element id="module-output" name="MyCalculator" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
