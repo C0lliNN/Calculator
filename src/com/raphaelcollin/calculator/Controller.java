@@ -253,24 +253,18 @@ public class Controller {
         }
         try {
             i.eval("result = "+expression);
-            String result = String.format("%f",i.get("result"));
-            textField.setText(result);
+            if(i.get("result") instanceof Integer){
+                String result = String.format("%d",i.get("result"));
+                textField.setText(result);
+            } else if(i.eval("result") instanceof Double){
+                String result = String.format("%f",i.get("result"));
+                textField.setText(result);
+                handleDecimalPlaces();
+            }
             lastOperation = true;
             isWithBracket = false;
-            handleDecimalPlaces();
-        } catch (IllegalFormatConversionException e){
-            try {
-                i.eval("result = "+expression);
-                String result =  String.format("%d",i.get("result"));
-                textField.setText(result);
-                lastOperation = true;
-                isWithBracket = false;
-            }catch (EvalError e2){
-                e2.printStackTrace();
-            }
-
-        } catch (EvalError e3){
-            e3.printStackTrace();
+        } catch (EvalError e){
+            e.printStackTrace();
         }
     }
 
