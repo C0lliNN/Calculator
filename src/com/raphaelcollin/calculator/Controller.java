@@ -9,10 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
 import bsh.Interpreter;
-
-import java.util.IllegalFormatConversionException;
 import java.util.regex.Pattern;
 
 public class Controller {
@@ -254,10 +251,10 @@ public class Controller {
         try {
             i.eval("result = "+expression);
             if(i.get("result") instanceof Integer){
-                String result = String.format("%d",i.get("result"));
+                String result = String.format("%d",(Integer) i.get("result"));
                 textField.setText(result);
             } else if(i.eval("result") instanceof Double){
-                String result = String.format("%f",i.get("result"));
+                String result = String.format("%f",(Double) i.get("result"));
                 textField.setText(result);
                 handleDecimalPlaces();
             }
