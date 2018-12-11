@@ -15,10 +15,7 @@ public class Main extends Application {
         primaryStage.setTitle("Calculator");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 330, 420));
-        primaryStage.getIcons().addAll(
-                new Image("file:icon64x64.png"),
-                new Image("file:icon32x32.png")
-        );
+        primaryStage.getIcons().add(new Image("file:icon64x64.png"));
         primaryStage.show();
     }
 

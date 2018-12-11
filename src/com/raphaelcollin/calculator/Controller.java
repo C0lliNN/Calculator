@@ -220,6 +220,7 @@ public class Controller {
 
     private void equalButton(){
         String expression = textField.getText();
+        expression = expression.replaceAll(",",".");
 
             // if the last char of the expression string is an operator or dot (example: 5x4x), the code
             // will cut this char (example: 5 x 4)
@@ -322,10 +323,23 @@ public class Controller {
         // This method will remove redundant zeros
 
     private void handleDecimalPlaces(){
-        String pieces[] = textField.getText().split(Pattern.quote("."));
+        String regex;
+        if(textField.getText().contains(",")){
+            regex = ",";
+        } else if(textField.getText().contains(".")){
+            regex = ".";
+        } else{
+            return;
+        }
+        String[] pieces;
+        if(regex.equals(".")){
+            pieces = textField.getText().split(Pattern.quote("."));
+        } else{
+            pieces = textField.getText().split(",");
+        }
         for (int c = pieces[1].length()-1; c >= 0; c--){
             char lastChar = pieces[1].charAt(c);
-            if (lastChar == '0' || lastChar == '.'){
+            if (lastChar == '0' || lastChar == regex.charAt(0)){
                 int size = textField.getText().length();
                 textField.setText(textField.getText().substring(0,size-1));
                 if (textField.getText().isEmpty()){
@@ -333,14 +347,16 @@ public class Controller {
                 }
             }
             else{
+                textField.setText(textField.getText().replaceAll(",","."));
                 return;
             }
 
-            if (textField.getText().charAt(textField.getText().length()-1) == '.'){
+            if (textField.getText().charAt(textField.getText().length()-1) == regex.charAt(0)){
                 int size = textField.getText().length();
                 textField.setText(textField.getText().substring(0,size-1));
             }
         }
+        textField.setText(textField.getText().replaceAll(",","."));
     }
 
         // This method won't allow the text filed have more of 15 characters
