@@ -11,11 +11,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
-        primaryStage.setTitle("Calculator");
+        Parent root = FXMLLoader.load(getClass().getResource("/com/raphaelcollin/calculator/mainwindow.fxml"));
+        primaryStage.setTitle("Calculadora");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 330, 420));
-        primaryStage.getIcons().add(new Image("file:icon64x64.png"));
+        primaryStage.getIcons().add(new Image("/com/raphaelcollin/calculator/imagens/icon.jpg"));
         primaryStage.show();
     }
 
