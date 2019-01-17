@@ -10,6 +10,8 @@ Esse é meu primeiro projeto real. Nesse projeto, eu estou usando JDK 8 com o n�
 Para Utilizar esse projeto, basta abrir-lo na IDE de sua preferência e adicionar as bibliotecas BeanShellBox.jar e bsh-2.0b4.jar
 da pasta BeanShellBox\lib no seu projeto. Esse processo varia conforme a IDE mas é um processo bastante simples, basta procurar no google que não haverá dificuldade de encontrar.
 
+##### Já existe um arquivo executável pronto. Basta baixar a pasta Executavel e executar o arquivo Calculadora.jar
+
 ### Pronto! Agora basta executar o projeto!
 
 
