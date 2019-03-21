@@ -5,14 +5,4 @@ Esse é meu primeiro projeto real. Nesse projeto, eu estou usando JDK 8 com o n�
 
 ![calculadora](https://user-images.githubusercontent.com/44872660/51351790-f507fe80-1a92-11e9-855b-d2cf064fa464.png)
 
-## Como utilizar o projeto
-
-Para Utilizar esse projeto, basta abrir-lo na IDE de sua preferência e adicionar as bibliotecas BeanShellBox.jar e bsh-2.0b4.jar
-da pasta BeanShellBox\lib no seu projeto. Esse processo varia conforme a IDE mas é um processo bastante simples, basta procurar no google que não haverá dificuldade de encontrar.
-
-##### Já existe um arquivo executável pronto. Basta baixar a pasta Executavel e executar o arquivo Calculadora.jar
-
-### Pronto! Agora basta executar o projeto!
-
-
-Eu aceito sugestões, dicas e tudo mais!
+## Eu aceito sugestões, dicas e tudo mais!
