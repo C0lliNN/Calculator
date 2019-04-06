@@ -17,4 +17,6 @@ Esse é meu primeiro usando javafx. Nesse projeto, eu estou usando JDK 8 com o n
 * Inversão de Sinal
 * Divisão 1 / x
 
-## Eu aceito sugestões, dicas e tudo mais!
+## Download
+
+[Link para download do arquivo executável (.jar):](https://drive.google.com/open?id=1lBIvcqM-fevFAxEA68YeDyhq-POLb-ZO)
