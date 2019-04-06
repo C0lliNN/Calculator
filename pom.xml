@@ -61,7 +61,7 @@
                         </manifestEntries>
                     </archive>
 
-                    <finalName>AcademicoIFF</finalName>
+                    <finalName>Calculadora-temp</finalName>
                 </configuration>
             </plugin>
 
@@ -80,6 +80,7 @@
                                     <mainClass>${fully.qualified.main.class}</mainClass>
                                 </transformer>
                             </transformers>
+                            <finalName>Calculadora</finalName>
                         </configuration>
                     </execution>
                 </executions>
