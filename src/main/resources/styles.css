@@ -1,34 +1,45 @@
 
-    /* #main refers BorderPane */
 
-    /* The background the program */
+    /* Background da aplicação*/
 
-#main{
-    -fx-background-color: #303030;
+.root {
+     -fx-background-color: linear-gradient(#fcfcfc 0%, #f7f7f7 25%, #f7f7f7 75%, #fcfcfc 100%);
 }
 
-    /* Botões de números */
+    /* Configuração de todos os botões */
 
-.button{
-    -fx-text-fill: white;
-    -fx-background-color: #3B3D3B;
+.button {
+    -fx-background-radius: 100%;
+}
+
+    /* Botões numéricos */
+
+.numbers {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.numbers:hover {
+    -fx-background-color: #dddddd;
 }
 
     /* Botões operadores */
 
-.operators{
-    -fx-background-color: #333433;
+.operators {
+    -fx-background-color: #ff9f19;
+    -fx-text-fill: white;
+}
+
+.operators:hover {
+    -fx-background-color: #d18112;
 }
 
     /* Botão igual */
 
-#equal{
-    -fx-background-color: #D43B03;
+#equal {
+    -fx-background-color: #ffb518;
 }
 
-    /* Configuração do Text Field */
-
-.text-field{
-    -fx-text-fill: #F4E003;
-    -fx-background-color: #616161;
+#equal:hover {
+    -fx-background-color: #cc9012;
 }

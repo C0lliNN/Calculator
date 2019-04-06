@@ -1,4 +1,4 @@
-package com.raphaelcollin.calculator;
+package com.raphaelcollin.calculadora;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class Main extends Application {
 
     @Override
@@ -14,8 +16,16 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/mainwindow.fxml"));
         primaryStage.setTitle("Calculadora");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 330, 420));
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.jpg")));
+
+            /* Configuração do tamanho da janela
+            *
+            * Largura: 22% da largura atual do computador onde está sendo executada a aplicação
+            * Altura: 47% da altura atual do computador onde está sendo executada a aplicação */
+
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        primaryStage.setScene(new Scene(root, dimension.width * 0.22, dimension.height * 0.47));
+
+        primaryStage.getIcons().add(new Image("file:arquivos/icon.png"));
         primaryStage.show();
     }
 
