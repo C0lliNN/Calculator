@@ -13,10 +13,7 @@ Esse é meu primeiro usando javafx. Nesse projeto, eu estou usando JDK 8 com o n
 * Divisão
 * Raiz Quadrada
 * Potência
+* Fatorial
 * Porcentagem
 * Inversão de Sinal
 * Divisão 1 / x
-
-## Download
-
-[Link para download do arquivo executável (.jar):](https://drive.google.com/open?id=1lBIvcqM-fevFAxEA68YeDyhq-POLb-ZO)
