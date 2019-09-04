@@ -3,23 +3,31 @@ package com.raphaelcollin.calculadora;
 import bsh.EvalError;
 import bsh.Interpreter;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.util.Duration;
+
 import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private GridPane gridPane;
     @FXML
@@ -62,18 +70,27 @@ public class Controller {
             /* Esse objeto vai servir para obter a resolução atual do computador em que está sendo executado
              a aplicação */
 
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle2D resolucaoAtual = Screen.getPrimary().getBounds();
 
-        label.setFont(new Font("Verdana",dimension.width * 0.018));
+        borderPane.setPadding(new Insets(resolucaoAtual.getHeight() * 0.02777,
+                resolucaoAtual.getWidth() * 0.015625, resolucaoAtual.getHeight() * 0.009259,
+                resolucaoAtual.getWidth() * 0.015625));
 
-        label.setWrapText(true);
+        gridPane.setHgap(resolucaoAtual.getWidth() * 0.00677);
+        gridPane.setVgap(resolucaoAtual.getWidth() * 0.00677);
+        BorderPane.setMargin(gridPane, new Insets(resolucaoAtual.getHeight() * 0.0324,0,0,0));
 
-            // O label não pode ter mais que 20 caracteres
+        label.setFont(new Font("Verdana",resolucaoAtual.getWidth() * 0.018));
+
+        label.setWrapText(false);
+
+            // O label não pode ter mais que 17 caracteres
 
         label.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (label.getText().length() > 20){
-                label.setText(label.getText().substring(0,20));
+            if (label.getText().length() > 17){
+                label.setText(label.getText().substring(0,17));
             }
+
 
         });
 
@@ -86,19 +103,19 @@ public class Controller {
 
                 // Colocando o tamanho dos botões para 3% do tamanho da tela
 
-            button.setPrefSize(dimension.width * 0.03,dimension.width * 0.03);
+            button.setPrefSize(resolucaoAtual.getWidth() * 0.03,resolucaoAtual.getWidth() * 0.03);
 
                 // Configurando fontes específicas
 
-            if (button.getText().equals("x²") || button.getText().equals("x³")){
-                button.setFont(new Font("Cambria Italic",dimension.width * 0.012));
+            if (button.getText().equals("x²") || button.getText().equals("x³") || button.getText().equals("x!")){
+                button.setFont(new Font("Cambria Italic",resolucaoAtual.getWidth() * 0.012));
             } else {
-                button.setFont(new Font("Verdana",dimension.width * 0.011));
+                button.setFont(new Font("Verdana",resolucaoAtual.getWidth() * 0.011));
             }
 
                 // Colocando uma sombra externa em cada botão
 
-            button.setEffect(new DropShadow(3, Color.BLACK));
+            button.setEffect(new DropShadow(resolucaoAtual.getWidth() * 0.0015625, Color.BLACK));
 
         }
 
@@ -108,8 +125,8 @@ public class Controller {
 
         ImageView imageView = new ImageView(new Image("file:arquivos/fracao.png"));
 
-        imageView.setFitWidth(dimension.width * 0.016);
-        imageView.setFitHeight(dimension.width * 0.016);
+        imageView.setFitWidth(resolucaoAtual.getWidth() * 0.016);
+        imageView.setFitHeight(resolucaoAtual.getWidth() * 0.016);
 
         fracaoButton.setGraphic(imageView);
 
@@ -117,8 +134,8 @@ public class Controller {
 
         ImageView imageView2 = new ImageView(new Image("file:arquivos/backspace-icon.png"));
 
-        imageView2.setFitWidth(dimension.width * 0.016);
-        imageView2.setFitHeight(dimension.width * 0.016);
+        imageView2.setFitWidth(resolucaoAtual.getWidth() * 0.016);
+        imageView2.setFitHeight(resolucaoAtual.getWidth() * 0.016);
 
         backspaceButton.setGraphic(imageView2);
 
@@ -126,8 +143,8 @@ public class Controller {
 
         ImageView imageView3 = new ImageView(new Image("file:arquivos/plusorminusicon.png"));
 
-        imageView3.setFitWidth(dimension.width * 0.015);
-        imageView3.setFitHeight(dimension.width * 0.015);
+        imageView3.setFitWidth(resolucaoAtual.getWidth() * 0.015);
+        imageView3.setFitHeight(resolucaoAtual.getWidth() * 0.015);
 
         plusOrMinusButton.setGraphic(imageView3);
 
@@ -368,6 +385,49 @@ public class Controller {
 
     }
 
+    /* Nesse método iremos calcular o resultado do fatorial do número ou resultado da expressão
+     * presente no label
+     *
+     * EX: 5 ==> 120
+     * EX: 3 * 2 ==> 720 */
+
+    @FXML
+    public void handleFatorial() {
+        handleIgualButton();
+
+        /* Se o usuário tentar calcular o fatorial de um número não inteiro, de um número negativo ou de um
+           número maior que 65, a aplicação tocará um som de erro
+           e nada acontecerá */
+
+        if (label.getText().contains(".") || label.getText().trim().startsWith("-") ||
+                Integer.parseInt(label.getText()) > 65) {
+            Platform.runLater((Runnable)
+                    Toolkit.getDefaultToolkit().getDesktopProperty("win.sound.default"));
+            return;
+        }
+
+
+        if (label.getText().trim().equals("0") || label.getText().trim().equals("0")) { // !0 e !1 = 1
+            label.setText("1");
+        } else {
+            long valor = Long.parseLong(label.getText());
+            label.setText(String.format("%d",calcularFatorial(valor)));
+
+        }
+
+        operacaoRealizada = true;
+        parentesesNaExpressao = false;
+    }
+
+    /* Método Recursivo para calcular o fatorial de um número */
+
+    private long calcularFatorial(long valor) {
+        if (valor < 2) {
+            return 1;
+        }
+        return valor * calcularFatorial(valor - 1);
+    }
+
     /* Nesse método, iremos inverter o valor do número ou do resultado da expressão contida no label
      *
      * Ex: 5 ==> -5
@@ -465,7 +525,7 @@ public class Controller {
     private boolean verificarUltimoCharOperador(){
         String text = label.getText().trim();
 
-        return text.matches(".*[+×÷ " + Pattern.quote("-") + "]$");
+        return text.matches(".*[+×÷" + Pattern.quote("-") + "]$");
 
     }
 
@@ -545,4 +605,5 @@ public class Controller {
         scaleTransition.setAutoReverse(true);
         scaleTransition.play();
     }
+
 }

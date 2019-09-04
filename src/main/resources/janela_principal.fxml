@@ -6,27 +6,20 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<BorderPane fx:controller="com.raphaelcollin.calculadora.Controller" stylesheets="@styles.css"
+<BorderPane fx:id="borderPane" fx:controller="com.raphaelcollin.calculadora.Controller" stylesheets="@estilo.css"
             xmlns:fx="http://javafx.com/fxml">
-    <padding>
-        <Insets top="30" left="30" right="30" bottom="10"/>
-    </padding>
-    <top>
 
+    <top>
             <!-- Label principal -->
 
         <HBox alignment="BASELINE_RIGHT">
             <Label text="0" fx:id="label"/>
         </HBox>
 
-
     </top>
 
     <center>
-        <GridPane fx:id="gridPane" alignment="TOP_CENTER" hgap="13" vgap="13">
-            <BorderPane.margin>
-                <Insets top="35.0"/>
-            </BorderPane.margin>
+        <GridPane fx:id="gridPane" alignment="TOP_CENTER">
 
                     <!-- O sentido das linhas é de cima  para baixo -->
 
@@ -83,7 +76,7 @@
 
                 <!--Linha 3-->
 
-            <Button text="+" onAction="#handleOperatorsButtons" styleClass="operators"  GridPane.rowIndex="3"
+            <Button text="x!" onAction="#handleFatorial" styleClass="operators"  GridPane.rowIndex="3"
                     GridPane.columnIndex="0"/>
 
             <Button text="1" onAction="#handleNumbersButtons" GridPane.rowIndex="3" GridPane.columnIndex="1"
