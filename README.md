@@ -1,7 +1,7 @@
 # Calculator
-A simple Calculator developed in Java using JavaFX -- (JDK 8)
+A simple Calculator developed in Java using JavaFX -- (JDK 11)
 
-![Sequência 01_3](https://user-images.githubusercontent.com/44872660/64299644-52808b00-cf50-11e9-8c82-ade98b626cb8.gif)
+![App Screenshot](./docs/calculator_screenshot.png)
 
 ## Features
 
@@ -15,3 +15,17 @@ A simple Calculator developed in Java using JavaFX -- (JDK 8)
 * Percent
 * Sign Inversion
 * Division 1 / x
+
+## How to use it
+
+### Running the Application
+```shell
+mvn clean compile javafx:jlink
+
+```
+
+### Building the Application
+```shell
+mvn clean compile javafx:jlink
+./target/Calculator/bin/CalculatorLauncher
+```
