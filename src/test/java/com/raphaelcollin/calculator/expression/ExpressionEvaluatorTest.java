@@ -1,5 +1,6 @@
 package com.raphaelcollin.calculator.expression;
 
+import com.raphaelcollin.calculator.model.expression.ExpressionEvaluator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 

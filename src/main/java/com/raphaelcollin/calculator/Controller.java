@@ -1,8 +1,7 @@
 package com.raphaelcollin.calculator;
 
-import bsh.EvalError;
-import bsh.Interpreter;
-import com.raphaelcollin.calculator.expression.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.Calculator;
+import com.raphaelcollin.calculator.model.expression.ExpressionEvaluator;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -52,7 +51,7 @@ public class Controller {
     private boolean hasPointInExpression = false;
     private boolean hasParenthesesInExpression = false;
 
-    private ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
+    private final Calculator calculator = new Calculator(new ExpressionEvaluator());
 
     public void initialize() {
 
@@ -64,35 +63,35 @@ public class Controller {
 
         gridPane.setHgap(screenSize.getWidth() * 0.00677);
         gridPane.setVgap(screenSize.getWidth() * 0.00677);
-        BorderPane.setMargin(gridPane, new Insets(screenSize.getHeight() * 0.0324,0,0,0));
+        BorderPane.setMargin(gridPane, new Insets(screenSize.getHeight() * 0.0324, 0, 0, 0));
 
-        label.setFont(new Font("Verdana",screenSize.getWidth() * 0.018));
+        label.setFont(new Font("Verdana", screenSize.getWidth() * 0.018));
 
         label.setWrapText(false);
 
-            // Max = 17 Characters
+        // Max = 17 Characters
 
         label.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (label.getText().length() > 17){
-                label.setText(label.getText().substring(0,17));
+            if (label.getText().length() > 17) {
+                label.setText(label.getText().substring(0, 17));
             }
 
 
         });
 
-            // Button general Config
+        // Button general Config
 
-        for (Node node: gridPane.getChildren()){
+        for (Node node : gridPane.getChildren()) {
             Button button = (Button) node;
 
             button.setOnMouseClicked(e -> scaleButton(button));
 
-            button.setPrefSize(screenSize.getWidth() * 0.03,screenSize.getWidth() * 0.03);
+            button.setPrefSize(screenSize.getWidth() * 0.03, screenSize.getWidth() * 0.03);
 
-            if (button.getText().equals("x²") || button.getText().equals("x³") || button.getText().equals("x!")){
-                button.setFont(new Font("Cambria Italic",screenSize.getWidth() * 0.012));
+            if (button.getText().equals("x²") || button.getText().equals("x³") || button.getText().equals("x!")) {
+                button.setFont(new Font("Cambria Italic", screenSize.getWidth() * 0.012));
             } else {
-                button.setFont(new Font("Verdana",screenSize.getWidth() * 0.011));
+                button.setFont(new Font("Verdana", screenSize.getWidth() * 0.011));
             }
 
             button.setEffect(new DropShadow(screenSize.getWidth() * 0.0015625, Color.BLACK));
@@ -125,23 +124,23 @@ public class Controller {
     }
 
     @FXML
-    public void handleDeleteButton(){
+    public void handleDeleteButton() {
 
         label.setText(label.getText().trim());
 
         int size = label.getText().length();
 
-        if(label.getText().endsWith(")")){
+        if (label.getText().endsWith(")")) {
             int index = label.getText().indexOf("(");
-            label.setText(label.getText().substring(0,index));
+            label.setText(label.getText().substring(0, index));
             hasParenthesesInExpression = false;
 
         } else {
-            if (label.getText().endsWith(".")){
+            if (label.getText().endsWith(".")) {
                 hasPointInExpression = false;
             }
-            label.setText(label.getText().substring(0,size-1));
-            if (label.getText().isEmpty()){
+            label.setText(label.getText().substring(0, size - 1));
+            if (label.getText().isEmpty()) {
                 label.setText("0");
             }
 
@@ -151,7 +150,7 @@ public class Controller {
     }
 
     @FXML
-    public void handleClearButton(){
+    public void handleClearButton() {
         label.setText("0");
         operationPerformed = false;
         hasPointInExpression = false;
@@ -162,44 +161,45 @@ public class Controller {
     public void handlePercent() {
         String expressao = label.getText().trim();
 
-        double valor;
+        double value;
 
-        if (expressao.matches("^\\d+")){
-            valor = Double.parseDouble(expressao) / 100;
-            label.setText(String.format("%.2f",valor));
+        if (expressao.matches("^\\d+")) {
+            value = calculator.percentage(Double.parseDouble(expressao));
+            label.setText(String.format("%.2f", value));
 
-        } else{
+        } else {
+            // Expression with an operator
             Pattern pattern = Pattern.compile("(.*) (.*)$");
             Matcher matcher = pattern.matcher(expressao);
 
-            if(matcher.find()){
+            if (matcher.find()) {
                 try {
-                    valor = Double.parseDouble(matcher.group(2).trim()) / 100;
-                    label.setText(label.getText().replaceAll("(.*) (.*)$",matcher.group(1) +
-                            String.format(" %.2f",valor)));
-                } catch (NumberFormatException e){
+                    value = calculator.percentage(Double.parseDouble(matcher.group(2).trim()));
+
+                    label.setText(label.getText().replaceAll("(.*) (.*)$", matcher.group(1) +
+                            String.format(" %.2f", value)));
+                } catch (NumberFormatException e) {
                     return;
                 }
-
             }
         }
 
-        label.setText(label.getText().replaceAll(",","."));
+        label.setText(label.getText().replaceAll(",", "."));
         hasPointInExpression = label.getText().contains(".");
 
     }
 
     @FXML
-    public void handleSquareRoot(){
+    public void handleSquareRoot() {
 
         handleEqualButton();
 
         double value = Double.parseDouble(label.getText());
-        if (value < 0){
+        if (value < 0) {
             label.setText(INVALID_VALUE_TEXT);
         } else {
-            double result = Math.sqrt(value);
-            label.setText(String.format("%f",result));
+            double result = calculator.squareRoot(value);
+            label.setText(String.format("%f", result));
         }
 
         handleDecimalCases();
@@ -210,18 +210,18 @@ public class Controller {
     }
 
     @FXML
-    public void handleOperatorsButtons(ActionEvent event){
+    public void handleOperatorsButtons(ActionEvent event) {
         Button button = (Button) event.getSource();
 
         String expression = label.getText().trim();
 
-        if(label.getText().endsWith("(-)")){
-            label.setText(label.getText().replace("(-)",""));
+        if (label.getText().endsWith("(-)")) {
+            label.setText(label.getText().replace("(-)", ""));
         }
-        if(button.getText().equals("-") && label.getText().equals("0")){
+        if (button.getText().equals("-") && label.getText().equals("0")) {
             label.setText("-");
         }
-        if (!expression.endsWith(button.getText())){
+        if (!expression.endsWith(button.getText())) {
             handleOperatorClick(button.getText());
         }
 
@@ -230,22 +230,22 @@ public class Controller {
 
 
     @FXML
-    public void handlePotencia(ActionEvent event) {
+    public void handlePow(ActionEvent event) {
         String text = ((Button) event.getSource()).getText();
 
-        double valor;
+        double value;
 
         handleEqualButton();
 
-        valor = Double.parseDouble(label.getText());
+        value = Double.parseDouble(label.getText());
 
-        if (text.equals("x²")){
-            valor = valor * valor;
+        if (text.equals("x²")) {
+            value = calculator.square(value);
         } else {
-            valor = valor * valor * valor;
+            value = calculator.cube(value);
         }
 
-        label.setText(String.format("%f",valor));
+        label.setText(String.format("%f", value));
 
         handleDecimalCases();
 
@@ -256,43 +256,40 @@ public class Controller {
     }
 
     @FXML
-    public void handleNumbersButtons(ActionEvent event){
+    public void handleNumbersButtons(ActionEvent event) {
         Button button = (Button) event.getSource();
 
-        if(checkInput() || operationPerformed){
+        if (checkInput() || operationPerformed) {
             label.setText(button.getText());
             operationPerformed = false;
-        } else if(hasParenthesesInExpression){
+        } else if (hasParenthesesInExpression) {
 
             int length = label.getText().length();
-            label.setText(label.getText().substring(0,length-1) + button.getText() +
-                    label.getText().substring(length-1,length));
+            label.setText(label.getText().substring(0, length - 1) + button.getText() +
+                    label.getText().substring(length - 1, length));
 
-        } else{
-            label.setText(label.getText()+button.getText());
+        } else {
+            label.setText(label.getText() + button.getText());
 
         }
     }
 
     @FXML
-    public void handleOndDividedByX() {
+    public void handleOneDividedByX() {
         handleEqualButton();
 
-        double valor = Double.parseDouble(label.getText());
+        double value = Double.parseDouble(label.getText());
 
-        if (valor != 0){
-            valor = 1 / valor;
+        if (value != 0) {
+            double result = calculator.inverse(value);
 
-            label.setText(String.format("%f",valor));
-
+            label.setText(String.format("%f", result));
             handleDecimalCases();
 
             operationPerformed = true;
             hasParenthesesInExpression = false;
             hasPointInExpression = label.getText().contains(".");
         }
-
-
     }
 
     @FXML
@@ -306,46 +303,35 @@ public class Controller {
             return;
         }
 
+        long value = Long.parseLong(label.getText());
+        long factorial = calculator.factorial(value);
 
-        if (label.getText().trim().equals("0") || label.getText().trim().equals("0")) { // !0 e !1 = 1
-            label.setText("1");
-        } else {
-            long value = Long.parseLong(label.getText());
-            label.setText(String.format("%d", calculateFactorial(value)));
-
-        }
+        label.setText(String.format("%d", factorial));
 
         operationPerformed = true;
         hasParenthesesInExpression = false;
     }
 
-    private long calculateFactorial(long valor) {
-        if (valor < 2) {
-            return 1;
-        }
-        return valor * calculateFactorial(valor - 1);
-    }
-
     @FXML
-    public void handlePlusOrMinus(){
+    public void handlePlusOrMinus() {
         label.setText(label.getText().trim());
-        if (!label.getText().equals("0")){
+        if (!label.getText().equals("0")) {
             handleEqualButton();
             double number = Double.parseDouble(label.getText());
-            number = number * (-1);
-            label.setText(String.format("%f",number));
+            double result = calculator.invertSignal(number);
+            label.setText(String.format("%f", result));
             handleDecimalCases();
         }
     }
 
 
     @FXML
-    public void handlePoint(){
+    public void handlePoint() {
 
         if ((!(checkLastCharOperator() || checkInput()) && !hasPointInExpression) ||
-                label.getText().equals("0")){
+                label.getText().equals("0")) {
 
-            label.setText(label.getText()+".");
+            label.setText(label.getText() + ".");
             operationPerformed = false;
             hasPointInExpression = true;
 
@@ -353,9 +339,9 @@ public class Controller {
     }
 
     @FXML
-    private void handleEqualButton(){
+    private void handleEqualButton() {
         try {
-            Double result = expressionEvaluator.evaluate(label.getText().trim());
+            Double result = calculator.evaluate(label.getText().trim());
             String formattedResult = String.format("%f", result);
             label.setText(formattedResult);
             handleDecimalCases();
@@ -364,15 +350,14 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    private boolean checkInput(){
+    private boolean checkInput() {
         return label.getText().equals("0") || label.getText().equals(INVALID_VALUE_TEXT)
                 || label.getText().equals(INVALID_FORMAT_TEXT);
     }
 
-    private boolean checkLastCharOperator(){
+    private boolean checkLastCharOperator() {
         String text = label.getText().trim();
 
         return text.matches(".*[+×÷" + Pattern.quote("-") + "]$");
@@ -380,22 +365,22 @@ public class Controller {
     }
 
 
-    private void handleOperatorClick(String operator){
+    private void handleOperatorClick(String operator) {
         boolean result = checkLastCharOperator();
 
-        if (!result){
-            label.setText(label.getText()+ " " + operator + " ");
+        if (!result) {
+            label.setText(label.getText() + " " + operator + " ");
             hasParenthesesInExpression = false;
-        }else {
+        } else {
             int size = label.getText().length();
-            if(operator.equals("-")){
-                label.setText(label.getText()+"(-)");
+            if (operator.equals("-")) {
+                label.setText(label.getText() + "(-)");
                 hasParenthesesInExpression = true;
-            } else{
-                if (size > 1){
-                    label.setText(label.getText().substring(0,size-2));
+            } else {
+                if (size > 1) {
+                    label.setText(label.getText().substring(0, size - 2));
                 } else {
-                    label.setText(label.getText().substring(0,size-1));
+                    label.setText(label.getText().substring(0, size - 1));
                 }
 
                 label.setText(label.getText() + operator + " ");
@@ -406,21 +391,21 @@ public class Controller {
 
     }
 
-    private void handleDecimalCases(){
+    private void handleDecimalCases() {
 
-        String expression = label.getText().replaceAll(",",".");
+        String expression = label.getText().replaceAll(",", ".");
 
         Pattern pattern = Pattern.compile("(.*" + Pattern.quote(".") + ".*)0+$");
         Matcher matcher = pattern.matcher(expression);
 
-        while (matcher.find()){
+        while (matcher.find()) {
             expression = (matcher.group(1));
             matcher = pattern.matcher(expression);
         }
         pattern = Pattern.compile("^(.*)(" + Pattern.quote(".") + "0?)$");
         matcher = pattern.matcher(expression);
 
-        if (matcher.find()){
+        if (matcher.find()) {
             expression = matcher.group(1);
         }
 
@@ -428,8 +413,8 @@ public class Controller {
     }
 
 
-    private void scaleButton(Button button){
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200),button);
+    private void scaleButton(Button button) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
         scaleTransition.setFromX(1);
         scaleTransition.setToX(1.03);
         scaleTransition.setFromY(1);

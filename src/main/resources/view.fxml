@@ -39,7 +39,7 @@
 
                 <!-- Row 1 -->
 
-            <Button  text="x²" onAction="#handlePotencia" styleClass="operators" GridPane.rowIndex="1"
+            <Button text="x²" onAction="#handlePow" styleClass="operators" GridPane.rowIndex="1"
                     GridPane.columnIndex="0"/>
 
             <Button text="7" onAction="#handleNumbersButtons" GridPane.rowIndex="1" GridPane.columnIndex="1"
@@ -56,7 +56,7 @@
 
             <!-- Row 2 -->
 
-            <Button text="x³" onAction="#handlePotencia" styleClass="operators" GridPane.rowIndex="2"
+            <Button text="x³" onAction="#handlePow" styleClass="operators" GridPane.rowIndex="2"
                     GridPane.columnIndex="0"/>
 
             <Button text="4" onAction="#handleNumbersButtons" GridPane.rowIndex="2" GridPane.columnIndex="1"
@@ -90,7 +90,7 @@
 
                 <!--Row 4-->
 
-            <Button fx:id="fractionButton" onAction="#handleOndDividedByX" styleClass="operators"
+            <Button fx:id="fractionButton" onAction="#handleOneDividedByX" styleClass="operators"
                     GridPane.rowIndex="4" GridPane.columnIndex="0"/>
 
             <Button fx:id="plusOrMinusButton" onAction="#handlePlusOrMinus" styleClass="operators"
