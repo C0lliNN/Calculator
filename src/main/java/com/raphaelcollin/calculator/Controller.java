@@ -2,6 +2,7 @@ package com.raphaelcollin.calculator;
 
 import bsh.EvalError;
 import bsh.Interpreter;
+import com.raphaelcollin.calculator.expression.ExpressionEvaluator;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -51,12 +52,9 @@ public class Controller {
     private boolean hasPointInExpression = false;
     private boolean hasParenthesesInExpression = false;
 
-    // Bsh
+    private ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
-    private Interpreter i = new Interpreter();
-
-
-    public void initialize(){
+    public void initialize() {
 
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
 
@@ -356,37 +354,17 @@ public class Controller {
 
     @FXML
     private void handleEqualButton(){
-        String expressao = label.getText();
-        expressao = expressao.replaceAll(",",".");
-        expressao = expressao.replaceAll("\\s","");
-
-        if (checkLastCharOperator()){
-            expressao = expressao.substring(0,expressao.length()-1);
-        }
-
-        if(expressao.contains(".")){ // Isso é para corigir um bug no interpretador
-            expressao = expressao.replaceAll("÷","/");
-        } else{
-            expressao = expressao.replaceAll("÷",".0/");
-        }
-
-        expressao = expressao.replaceAll("×","*");
-
         try {
-            i.eval("result = " + expressao);
-            if(i.get("result") instanceof Integer){
-                String result = String.format("%d",(Integer) i.get("result"));
-                label.setText(result);
-            } else if(i.eval("result") instanceof Double){
-                String result = String.format("%f",(Double) i.get("result"));
-                label.setText(result);
-                handleDecimalCases();
-            }
+            Double result = expressionEvaluator.evaluate(label.getText().trim());
+            String formattedResult = String.format("%f", result);
+            label.setText(formattedResult);
+            handleDecimalCases();
             operationPerformed = true;
             hasParenthesesInExpression = false;
-        } catch (EvalError e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private boolean checkInput(){
