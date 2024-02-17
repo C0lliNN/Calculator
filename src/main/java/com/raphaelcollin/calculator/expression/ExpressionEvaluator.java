@@ -23,6 +23,7 @@ public class ExpressionEvaluator {
         }
 
         expression = expression.replaceAll("×","*");
+        expression = expression.replaceAll("x","*");
 
         try {
             i.eval("result = " + expression);
