@@ -48,8 +48,6 @@ public class Controller {
     public Button plusOrMinusButton;
 
     private boolean operationPerformed = false;
-    private boolean hasPointInExpression = false;
-
     private final Calculator calculator = new Calculator(new ExpressionEvaluator());
 
     public void initialize() {
@@ -133,9 +131,6 @@ public class Controller {
             int index = label.getText().indexOf("(");
             label.setText(label.getText().substring(0, index));
         } else {
-            if (label.getText().endsWith(".")) {
-                hasPointInExpression = false;
-            }
             label.setText(label.getText().substring(0, size - 1));
             if (label.getText().isEmpty()) {
                 label.setText("0");
@@ -150,7 +145,6 @@ public class Controller {
     public void handleClearButton() {
         label.setText("0");
         operationPerformed = false;
-        hasPointInExpression = false;
     }
 
     @FXML
@@ -181,7 +175,6 @@ public class Controller {
         }
 
         label.setText(label.getText().replaceAll(",", "."));
-        hasPointInExpression = label.getText().contains(".");
 
     }
 
@@ -201,7 +194,6 @@ public class Controller {
         handleDecimalCases();
 
         operationPerformed = true;
-        hasPointInExpression = label.getText().contains(".");
     }
 
     @FXML
@@ -219,8 +211,6 @@ public class Controller {
         if (!expression.endsWith(button.getText())) {
             handleOperatorClick(button.getText());
         }
-
-        hasPointInExpression = false;
     }
 
 
@@ -245,7 +235,6 @@ public class Controller {
         handleDecimalCases();
 
         operationPerformed = true;
-        hasPointInExpression = label.getText().contains(".");
 
     }
 
@@ -281,7 +270,6 @@ public class Controller {
             handleDecimalCases();
 
             operationPerformed = true;
-            hasPointInExpression = label.getText().contains(".");
         }
     }
 
@@ -320,13 +308,11 @@ public class Controller {
     @FXML
     public void handlePoint() {
 
-        if ((!(checkLastCharOperator() || checkInput()) && !hasPointInExpression) ||
+        if ((!(checkLastCharOperator() || checkInput()) && !hasPointInExpression()) ||
                 label.getText().equals("0")) {
 
             label.setText(label.getText() + ".");
             operationPerformed = false;
-            hasPointInExpression = true;
-
         }
     }
 
@@ -402,6 +388,10 @@ public class Controller {
 
     private boolean hasParenthesesInExpression() {
         return label.getText().contains("(") && label.getText().contains(")");
+    }
+
+    private boolean hasPointInExpression() {
+        return label.getText().contains(".");
     }
 
 
