@@ -1,6 +1,7 @@
 package com.raphaelcollin.calculator.model;
 
 import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.exception.InvalidFactorialException;
 
 public class Calculator {
     private final ExpressionEvaluator expressionEvaluator;
@@ -9,10 +10,16 @@ public class Calculator {
     }
 
     public double percentage(double value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Percentage of a negative number is undefined");
+        }
         return value / 100;
     }
 
     public double squareRoot(double value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Square root of a negative number is undefined");
+        }
         return Math.sqrt(value);
     }
 
@@ -25,21 +32,30 @@ public class Calculator {
     }
 
     public double inverse(double value) {
+        if (value == 0) {
+            throw new IllegalArgumentException("Inverse of 0 is undefined");
+        }
         return 1 / value;
     }
 
-    public long factorial(long value) {
+    public long factorial(double value) {
         if (value < 0) {
-            throw new IllegalArgumentException("Factorial of a negative number is undefined");
+            throw new InvalidFactorialException("Factorial of a negative number is undefined");
         }
 
-        if (value == 0) {
+        if (Math.round(value) != value) {
+            throw new InvalidFactorialException("Factorial of a non-integer number is undefined");
+        }
+
+        long integer = Math.round(value);
+
+        if (integer == 0) {
             return 1;
         }
 
         long result = 1;
 
-        for (int i = 1; i <= value; i++) {
+        for (int i = 1; i <= integer; i++) {
             result *= i;
         }
 
@@ -47,6 +63,9 @@ public class Calculator {
     }
 
     public double invertSignal(double value) {
+        if (value == 0) {
+            return 0;
+        }
         return -value;
     }
 

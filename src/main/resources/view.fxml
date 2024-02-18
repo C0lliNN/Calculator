@@ -28,7 +28,7 @@
             <Button text="c" onAction="#handleClearButton" styleClass="operators" GridPane.rowIndex="0"
                     GridPane.columnIndex="1"/>
 
-            <Button fx:id="percentButton" onAction="#handlePercent" styleClass="operators"
+            <Button fx:id="percentButton" onAction="#handlePercentage" styleClass="operators"
                     GridPane.rowIndex="0" GridPane.columnIndex="2"/>
 
             <Button text="√" onAction="#handleSquareRoot" styleClass="operators" GridPane.rowIndex="0"
@@ -39,7 +39,7 @@
 
                 <!-- Row 1 -->
 
-            <Button text="x²" onAction="#handlePow" styleClass="operators" GridPane.rowIndex="1"
+            <Button text="x²" onAction="#handleSquare" styleClass="operators" GridPane.rowIndex="1"
                     GridPane.columnIndex="0"/>
 
             <Button text="7" onAction="#handleNumbersButtons" GridPane.rowIndex="1" GridPane.columnIndex="1"
@@ -56,7 +56,7 @@
 
             <!-- Row 2 -->
 
-            <Button text="x³" onAction="#handlePow" styleClass="operators" GridPane.rowIndex="2"
+            <Button text="x³" onAction="#handleCube" styleClass="operators" GridPane.rowIndex="2"
                     GridPane.columnIndex="0"/>
 
             <Button text="4" onAction="#handleNumbersButtons" GridPane.rowIndex="2" GridPane.columnIndex="1"
@@ -73,7 +73,7 @@
 
                 <!--Row 3-->
 
-            <Button text="x!" onAction="#handleFatorial" styleClass="operators"  GridPane.rowIndex="3"
+            <Button text="x!" onAction="#handleFactorial" styleClass="operators" GridPane.rowIndex="3"
                     GridPane.columnIndex="0"/>
 
             <Button text="1" onAction="#handleNumbersButtons" GridPane.rowIndex="3" GridPane.columnIndex="1"

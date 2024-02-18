@@ -1,6 +1,7 @@
 package com.raphaelcollin.calculator.model;
 
 import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.exception.InvalidFactorialException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +16,7 @@ class CalculatorTest {
         assertEquals(0.5, calculator.percentage(50));
         assertEquals(0.75, calculator.percentage(75));
         assertEquals(0.99, calculator.percentage(99));
+        assertThrows(IllegalArgumentException.class, () -> calculator.percentage(-1));
     }
 
     @Test
@@ -24,6 +26,7 @@ class CalculatorTest {
         assertEquals(4, calculator.squareRoot(16));
         assertEquals(5, calculator.squareRoot(25));
         assertEquals(6, calculator.squareRoot(36));
+        assertThrows(IllegalArgumentException.class, () -> calculator.squareRoot(-1));
     }
 
     @Test
@@ -51,6 +54,7 @@ class CalculatorTest {
         assertEquals(0.25, calculator.inverse(4));
         assertEquals(0.2, calculator.inverse(5));
         assertEquals(0.16666666666666666, calculator.inverse(6));
+        assertThrows(IllegalArgumentException.class, () -> calculator.inverse(0));
     }
 
     @Test
@@ -60,6 +64,8 @@ class CalculatorTest {
         assertEquals(2, calculator.factorial(2));
         assertEquals(6, calculator.factorial(3));
         assertEquals(24, calculator.factorial(4));
+        assertThrows(InvalidFactorialException.class, () -> calculator.factorial(-1));
+        assertThrows(InvalidFactorialException.class, () -> calculator.factorial(5.1));
     }
 
     @Test
