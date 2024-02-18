@@ -49,7 +49,6 @@ public class Controller {
 
     private boolean operationPerformed = false;
     private boolean hasPointInExpression = false;
-    private boolean hasParenthesesInExpression = false;
 
     private final Calculator calculator = new Calculator(new ExpressionEvaluator());
 
@@ -133,8 +132,6 @@ public class Controller {
         if (label.getText().endsWith(")")) {
             int index = label.getText().indexOf("(");
             label.setText(label.getText().substring(0, index));
-            hasParenthesesInExpression = false;
-
         } else {
             if (label.getText().endsWith(".")) {
                 hasPointInExpression = false;
@@ -154,7 +151,6 @@ public class Controller {
         label.setText("0");
         operationPerformed = false;
         hasPointInExpression = false;
-        hasParenthesesInExpression = false;
     }
 
     @FXML
@@ -205,7 +201,6 @@ public class Controller {
         handleDecimalCases();
 
         operationPerformed = true;
-        hasParenthesesInExpression = false;
         hasPointInExpression = label.getText().contains(".");
     }
 
@@ -250,7 +245,6 @@ public class Controller {
         handleDecimalCases();
 
         operationPerformed = true;
-        hasParenthesesInExpression = false;
         hasPointInExpression = label.getText().contains(".");
 
     }
@@ -262,7 +256,7 @@ public class Controller {
         if (checkInput() || operationPerformed) {
             label.setText(button.getText());
             operationPerformed = false;
-        } else if (hasParenthesesInExpression) {
+        } else if (hasParenthesesInExpression()) {
 
             int length = label.getText().length();
             label.setText(label.getText().substring(0, length - 1) + button.getText() +
@@ -287,7 +281,6 @@ public class Controller {
             handleDecimalCases();
 
             operationPerformed = true;
-            hasParenthesesInExpression = false;
             hasPointInExpression = label.getText().contains(".");
         }
     }
@@ -309,7 +302,6 @@ public class Controller {
         label.setText(String.format("%d", factorial));
 
         operationPerformed = true;
-        hasParenthesesInExpression = false;
     }
 
     @FXML
@@ -346,7 +338,6 @@ public class Controller {
             label.setText(formattedResult);
             handleDecimalCases();
             operationPerformed = true;
-            hasParenthesesInExpression = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -370,12 +361,10 @@ public class Controller {
 
         if (!result) {
             label.setText(label.getText() + " " + operator + " ");
-            hasParenthesesInExpression = false;
         } else {
             int size = label.getText().length();
             if (operator.equals("-")) {
                 label.setText(label.getText() + "(-)");
-                hasParenthesesInExpression = true;
             } else {
                 if (size > 1) {
                     label.setText(label.getText().substring(0, size - 2));
@@ -384,7 +373,6 @@ public class Controller {
                 }
 
                 label.setText(label.getText() + operator + " ");
-                hasParenthesesInExpression = false;
             }
         }
         operationPerformed = false;
@@ -410,6 +398,10 @@ public class Controller {
         }
 
         label.setText(expression);
+    }
+
+    private boolean hasParenthesesInExpression() {
+        return label.getText().contains("(") && label.getText().contains(")");
     }
 
 
