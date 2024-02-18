@@ -1,6 +1,6 @@
 package com.raphaelcollin.calculator.model;
 
-import com.raphaelcollin.calculator.model.expression.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
 
 public class Calculator {
     private final ExpressionEvaluator expressionEvaluator;

@@ -1,4 +1,4 @@
-package com.raphaelcollin.calculator.model.expression;
+package com.raphaelcollin.calculator.model.evaluator;
 
 import bsh.EvalError;
 import bsh.Interpreter;

@@ -1,6 +1,6 @@
 package com.raphaelcollin.calculator.model;
 
-import com.raphaelcollin.calculator.model.expression.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

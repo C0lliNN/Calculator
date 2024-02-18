@@ -1,7 +1,7 @@
 package com.raphaelcollin.calculator;
 
 import com.raphaelcollin.calculator.model.Calculator;
-import com.raphaelcollin.calculator.model.expression.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
