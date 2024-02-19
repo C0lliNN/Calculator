@@ -1,13 +1,13 @@
 package com.raphaelcollin.calculator.model;
 
-import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.parser.ExpressionParser;
 import com.raphaelcollin.calculator.model.exception.InvalidFactorialException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTest {
-    private final Calculator calculator = new Calculator(new ExpressionEvaluator());
+    private final Calculator calculator = new Calculator(new ExpressionParser());
 
     @Test
     void percentage() {

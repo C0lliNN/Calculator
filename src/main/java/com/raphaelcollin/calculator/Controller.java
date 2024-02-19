@@ -2,7 +2,7 @@ package com.raphaelcollin.calculator;
 
 import com.raphaelcollin.calculator.model.Calculator;
 import com.raphaelcollin.calculator.model.Expression;
-import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.parser.ExpressionParser;
 import com.raphaelcollin.calculator.model.exception.InvalidFactorialException;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
@@ -24,8 +24,6 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 
 import java.awt.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Controller {
 
@@ -49,7 +47,7 @@ public class Controller {
     @FXML
     public Button plusOrMinusButton;
 
-    private final Calculator calculator = new Calculator(new ExpressionEvaluator());
+    private final Calculator calculator = new Calculator(new ExpressionParser());
     private final Expression expression = new Expression();
 
     public void initialize() {
@@ -247,7 +245,7 @@ public class Controller {
     }
 
     private double calculateExpression() {
-        return calculator.evaluate(expression.getExpression());
+        return calculator.evaluate(expression.getRawExpression());
     }
 
     private void scaleButton(Button button) {

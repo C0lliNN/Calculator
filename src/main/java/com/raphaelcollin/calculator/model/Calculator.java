@@ -1,12 +1,13 @@
 package com.raphaelcollin.calculator.model;
 
-import com.raphaelcollin.calculator.model.evaluator.ExpressionEvaluator;
+import com.raphaelcollin.calculator.model.evaluator.ExpressionTree;
+import com.raphaelcollin.calculator.model.evaluator.parser.ExpressionParser;
 import com.raphaelcollin.calculator.model.exception.InvalidFactorialException;
 
 public class Calculator {
-    private final ExpressionEvaluator expressionEvaluator;
-    public Calculator(ExpressionEvaluator expressionEvaluator) {
-        this.expressionEvaluator = expressionEvaluator;
+    private final ExpressionParser expressionParser;
+    public Calculator(ExpressionParser expressionParser) {
+        this.expressionParser = expressionParser;
     }
 
     public double percentage(double value) {
@@ -70,6 +71,7 @@ public class Calculator {
     }
 
     public double evaluate(String expression) {
-        return expressionEvaluator.evaluate(expression);
+        ExpressionTree expressionTree = expressionParser.parse(expression);
+        return expressionTree.evaluate();
     }
 }

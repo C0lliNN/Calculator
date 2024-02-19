@@ -12,7 +12,7 @@ import com.raphaelcollin.calculator.model.exception.InvalidExpressionException;
 
 public class ExpressionParser {
     private static final String VALID_EXPRESSION_REGEX = "[-+*/.()0-9]+";
-    private static final String NUMBER_REGEX = "(-)?[0-9]+(\\.[0-9]+)?";
+    private static final String NUMBER_REGEX = "(\\(?-)?[0-9]+(\\.[0-9]+)?\\)?";
 
     public ExpressionTree parse(String expression) {
         validateExpression(expression);

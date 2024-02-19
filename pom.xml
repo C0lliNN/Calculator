@@ -57,11 +57,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache-extras.beanshell</groupId>
-            <artifactId>bsh</artifactId>
-            <version>${bsh.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.dependencies.version}</version>
