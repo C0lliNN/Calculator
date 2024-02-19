@@ -16,6 +16,9 @@ A simple Calculator developed in Java using JavaFX -- (JDK 11)
 * Sign Inversion
 * Division 1 / x
 
+## Components Overview
+![Components Overview](./docs/component_overview.png)
+
 ## How to use it
 
 ### Running the Application
