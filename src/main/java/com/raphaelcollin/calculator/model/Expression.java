@@ -101,7 +101,11 @@ public class Expression {
             throw new PointAlreadyPresentException("Point already present");
         }
 
-        rawExpression.append(".");
+        if (rawExpression.charAt(rawExpression.length() - 1) == ')') {
+            rawExpression.insert(rawExpression.length() - 1, ".");
+        } else {
+            rawExpression.append(".");
+        }
 
         history.push(Operation.ADD_DECIMAL_POINT);
         notifySubscribers();

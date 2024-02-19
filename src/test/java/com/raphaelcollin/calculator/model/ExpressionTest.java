@@ -143,6 +143,18 @@ class ExpressionTest {
         }
 
         @Test
+        @DisplayName("When expressions has parentheses, then it should append a decimal point to the number inside the parentheses")
+        void testAddDecimalPointWhenExpressionHasParentheses() {
+            expression.addNumber(5);
+            expression.addOperator("*");
+            expression.addOperator("-");
+            expression.addNumber(3);
+            expression.addDecimalPoint();
+
+            assertEquals("5*(-3.)", expression.getRawExpression());
+        }
+
+        @Test
         @DisplayName("Otherwise, it should append a decimal point to the expression")
         void testAddDecimalPointOtherwise() {
             expression.addNumber(5);
