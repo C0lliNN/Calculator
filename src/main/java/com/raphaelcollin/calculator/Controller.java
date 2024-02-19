@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -261,8 +262,10 @@ public class Controller {
     }
 
     private void handleException(Exception e) {
-        Platform.runLater((Runnable)
-                Toolkit.getDefaultToolkit().getDesktopProperty("win.sound.default"));
-        System.err.println(e.getMessage());
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("An error occurred");
+        alert.setContentText(e.getMessage());
+        alert.show();
     }
 }
